@@ -1,6 +1,6 @@
 ---
 name: prompt-intensity
-description: Automatically judge prompt complexity (light/medium/heavy) to decide which skills to trigger and which memory dimensions to load. Use at the start of each conversation turn.
+description: Use when starting a project session or when a development request may need memory loading, project skills, or heavier planning.
 category: workflow
 risk: safe
 source: community
@@ -19,10 +19,12 @@ Automatically classify incoming prompts by complexity to optimize skill triggeri
 
 ## When to Use
 
-This skill should be invoked **at the start of every conversation turn** before processing the user's request. It determines:
+Use this skill at the start of a project session, or when a request is ambiguous enough that the agent needs to decide whether to load project memory, trigger review skills, or enter a heavier planning flow. It determines:
 - Which skills should be triggered
 - Which memory dimensions (.ustht/mdbase/) should be loaded
 - Whether to enter brainstorming mode for complex tasks
+
+Do not invoke this skill for every small follow-up turn inside an already classified task. If the user only asks for a status update, a simple file read, a tiny wording change, or a direct command result, handle it directly.
 
 ## Classification Rules
 
@@ -131,7 +133,7 @@ This skill works in conjunction with the session bootstrap protocol defined in p
 ```markdown
 ## Session Bootstrap Protocol (Conditional Trigger)
 
-At the start of each conversation turn:
+At the start of a new project session, or when the current request changes task intensity:
 1. Invoke prompt-intensity skill to classify the request
 2. Based on classification:
    - LIGHT → skip memory loading, process directly
